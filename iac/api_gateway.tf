@@ -26,24 +26,6 @@ resource "aws_api_gateway_resource" "client" {
   path_part = "client"
 }
 
-resource "aws_api_gateway_method" "get_client" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.client.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "post_client" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "POST"
-  resource_id   = aws_api_gateway_resource.client.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
 resource "aws_api_gateway_resource" "client_id" {
   provider = aws.main
   
@@ -51,33 +33,6 @@ resource "aws_api_gateway_resource" "client_id" {
   parent_id = aws_api_gateway_resource.client.id
 
   path_part = "{client_id}"
-}
-
-resource "aws_api_gateway_method" "get_client_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.client_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "put_client_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "PUT"
-  resource_id   = aws_api_gateway_resource.client_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "delete_client_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "DELETE"
-  resource_id   = aws_api_gateway_resource.client_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
 }
 
 # ---------- Payment ---------- #
@@ -90,24 +45,6 @@ resource "aws_api_gateway_resource" "payment" {
   path_part = "payment"
 }
 
-resource "aws_api_gateway_method" "get_payment" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.payment.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "post_payment" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "POST"
-  resource_id   = aws_api_gateway_resource.payment.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
 resource "aws_api_gateway_resource" "payment_id" {
   provider = aws.main
   
@@ -117,14 +54,6 @@ resource "aws_api_gateway_resource" "payment_id" {
   path_part = "{payment_id}"
 }
 
-resource "aws_api_gateway_method" "get_payment_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.payment_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
 
 resource "aws_api_gateway_resource" "payment_loan" {
   provider = aws.main
@@ -144,15 +73,6 @@ resource "aws_api_gateway_resource" "payment_loan_id" {
   path_part = "{loan_id}"
 }
 
-resource "aws_api_gateway_method" "get_payment_loan_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.payment_loan_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
 # ---------- Loan ---------- #
 resource "aws_api_gateway_resource" "loan" {
   provider = aws.main
@@ -163,25 +83,6 @@ resource "aws_api_gateway_resource" "loan" {
   path_part = "loan"
 }
 
-resource "aws_api_gateway_method" "get_loan" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.loan.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "post_loan" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "POST"
-  resource_id   = aws_api_gateway_resource.loan.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-
 resource "aws_api_gateway_resource" "loan_id" {
   provider = aws.main
   
@@ -191,31 +92,80 @@ resource "aws_api_gateway_resource" "loan_id" {
   path_part = "{loan_id}"
 }
 
-resource "aws_api_gateway_method" "get_loan_id" {
-  provider = aws.main
+# --------- Methods and Integration
+module "api_configuration" {
+  providers = {
+    aws.main = aws.main
+  }
+  source = "./modules/api_methods_integration"
 
-  authorization = "NONE"
-  http_method   = "GET"
-  resource_id   = aws_api_gateway_resource.loan_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "put_loan_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "PUT"
-  resource_id   = aws_api_gateway_resource.loan_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
-}
-
-resource "aws_api_gateway_method" "delete_loan_id" {
-  provider = aws.main
-
-  authorization = "NONE"
-  http_method   = "DELETE"
-  resource_id   = aws_api_gateway_resource.loan_id.id
-  rest_api_id   = aws_api_gateway_rest_api.api.id
+  api_id = aws_api_gateway_rest_api.api.id
+  api_configuration = {
+    get_client = {
+      resource_id = aws_api_gateway_resource.client.id
+      http_method = "GET"
+    }
+    post_client = {
+      resource_id = aws_api_gateway_resource.client.id
+      http_method = "POST"
+    }
+    get_client_id = {
+      resource_id = aws_api_gateway_resource.client_id.id
+      http_method = "GET"
+    }
+    put_client_id = {
+      resource_id = aws_api_gateway_resource.client_id.id
+      http_method = "PUT"
+    }
+    delete_client_id = {
+      resource_id = aws_api_gateway_resource.client_id.id
+      http_method = "DELETE"
+    }
+    get_payment = {
+      resource_id = aws_api_gateway_resource.payment.id
+      http_method = "GET"
+    }
+    post_payment = {
+      resource_id = aws_api_gateway_resource.payment.id
+      http_method = "POST"
+    }
+    get_payment_id = {
+      resource_id = aws_api_gateway_resource.payment_id.id
+      http_method = "GET"
+    }
+    put_payment_id = {
+      resource_id = aws_api_gateway_resource.payment_id.id
+      http_method = "PUT"
+    }
+    delete_payment_id = {
+      resource_id = aws_api_gateway_resource.payment_id.id
+      http_method = "DELETE"
+    }
+    get_payment_loan_id = {
+      resource_id = aws_api_gateway_resource.payment_loan_id.id
+      http_method = "GET"
+    }
+    get_loan = {
+      resource_id = aws_api_gateway_resource.loan.id
+      http_method = "GET"
+    }
+    post_loan = {
+      resource_id = aws_api_gateway_resource.loan.id
+      http_method = "POST"
+    }
+    get_loan_id = {
+      resource_id = aws_api_gateway_resource.loan_id.id
+      http_method = "GET"
+    }
+    put_loan_id = {
+      resource_id = aws_api_gateway_resource.loan_id.id
+      http_method = "PUT"
+    }
+    delete_loan_id = {
+      resource_id = aws_api_gateway_resource.loan_id.id
+      http_method = "DELETE"
+    }
+  }
 }
 
 # ---------- Deploy ---------- #
