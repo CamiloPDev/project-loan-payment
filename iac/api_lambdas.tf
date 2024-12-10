@@ -61,4 +61,5 @@ module "lambdas" {
   lambda_name = replace(each.key, "_", "-")
   env         = var.env
   handler     = "index.handler"
+  lambda_policies = each.value.lambda_policies
 }

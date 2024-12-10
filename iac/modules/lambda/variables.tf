@@ -15,3 +15,16 @@ variable "handler" {
   type        = string
   nullable    = false
 }
+
+variable "lambda_policies" {
+  description = "Lista de politicas de la lambda"
+  type = list(object(
+    {
+      sid = optional(string)
+      actions = list(string)
+      effect = string
+      resources = list(string)
+    }
+  ))
+  default = []
+}
