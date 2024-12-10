@@ -1,7 +1,7 @@
 resource "aws_api_gateway_rest_api" "api" {
   provider = aws.main
 
-  name = "api-project-loan-${var.env}"
+  name        = "api-project-loan-${var.env}"
   description = "Api que maneja la logica del proyecto"
 
   tags = local.project_tags
@@ -9,9 +9,9 @@ resource "aws_api_gateway_rest_api" "api" {
 
 resource "aws_api_gateway_resource" "root" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_rest_api.api.root_resource_id
+  parent_id   = aws_api_gateway_rest_api.api.root_resource_id
 
   path_part = "v1"
 }
@@ -19,18 +19,18 @@ resource "aws_api_gateway_resource" "root" {
 # ---------- Client ---------- #
 resource "aws_api_gateway_resource" "client" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.root.id
+  parent_id   = aws_api_gateway_resource.root.id
 
   path_part = "client"
 }
 
 resource "aws_api_gateway_resource" "client_id" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.client.id
+  parent_id   = aws_api_gateway_resource.client.id
 
   path_part = "{client_id}"
 }
@@ -38,18 +38,18 @@ resource "aws_api_gateway_resource" "client_id" {
 # ---------- Payment ---------- #
 resource "aws_api_gateway_resource" "payment" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.root.id
+  parent_id   = aws_api_gateway_resource.root.id
 
   path_part = "payment"
 }
 
 resource "aws_api_gateway_resource" "payment_id" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.payment.id
+  parent_id   = aws_api_gateway_resource.payment.id
 
   path_part = "{payment_id}"
 }
@@ -57,18 +57,18 @@ resource "aws_api_gateway_resource" "payment_id" {
 
 resource "aws_api_gateway_resource" "payment_loan" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.payment.id
+  parent_id   = aws_api_gateway_resource.payment.id
 
   path_part = "loan"
 }
 
 resource "aws_api_gateway_resource" "payment_loan_id" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.payment_loan.id
+  parent_id   = aws_api_gateway_resource.payment_loan.id
 
   path_part = "{loan_id}"
 }
@@ -76,18 +76,18 @@ resource "aws_api_gateway_resource" "payment_loan_id" {
 # ---------- Loan ---------- #
 resource "aws_api_gateway_resource" "loan" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.root.id
+  parent_id   = aws_api_gateway_resource.root.id
 
   path_part = "loan"
 }
 
 resource "aws_api_gateway_resource" "loan_id" {
   provider = aws.main
-  
+
   rest_api_id = aws_api_gateway_rest_api.api.id
-  parent_id = aws_api_gateway_resource.loan.id
+  parent_id   = aws_api_gateway_resource.loan.id
 
   path_part = "{loan_id}"
 }

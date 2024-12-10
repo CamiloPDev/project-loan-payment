@@ -3,8 +3,8 @@ resource "aws_api_gateway_method" "methods" {
 
   for_each = var.api_configuration
 
-  rest_api_id = var.api_id
+  rest_api_id   = var.api_id
   authorization = each.value.authorization
-  http_method = each.value.http_method
-  resource_id = each.value.resource_id
+  http_method   = each.value.http_method
+  resource_id   = each.value.resource_id
 }
