@@ -16,6 +16,14 @@ resource "aws_api_gateway_resource" "root" {
   path_part = "api"
 }
 
+resource "aws_api_gateway_stage" "name" {
+  provider = aws.main
+
+  stage_name = var.env
+  deployment_id = aws_api_gateway_deployment.deploy.id
+  rest_api_id = aws_api_gateway_rest_api.api.id
+}
+
 # ---------- Client ---------- #
 resource "aws_api_gateway_resource" "client" {
   provider = aws.main
@@ -103,22 +111,19 @@ module "api_configuration" {
   api_configuration = local.api_configuration
 }
 
-# ---------- Deploy ---------- #
-# resource "aws_api_gateway_deployment" "example" {
-#   provider = aws.main
-#   rest_api_id = aws_api_gateway_rest_api.api.id
+resource "aws_api_gateway_deployment" "deploy" {
+  provider = aws.main
 
-#   triggers = {
-#     redeployment = sha1(jsonencode(
-#       [
-#         aws_api_gateway_resource.example.id,
-#         aws_api_gateway_method.example.id,
-#         aws_api_gateway_integration.integration.id,
-#       ]
-#     ))
-#   }
+  rest_api_id = aws_api_gateway_rest_api.api.id
 
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-# }
+  triggers = {
+    redeployment = sha1(jsonencode(
+      [
+        aws_api_gateway_rest_api.api.body,
+        aws_api_gateway_rest_api.api.policy
+      ]
+    ))
+  }
+
+  depends_on = [ module.api_configuration ]
+}

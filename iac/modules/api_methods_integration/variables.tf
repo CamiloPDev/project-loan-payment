@@ -8,9 +8,10 @@ variable "api_configuration" {
   description = "Configuracion de metodos, integraciones de la api"
   type = map(object(
     {
-      resource_id   = string
-      http_method   = string
-      authorization = optional(string, "NONE")
+      resource_id       = string
+      http_method       = string
+      authorization     = optional(string, "NONE")
+      lambda_invoke_arn = string
     }
   ))
 }
