@@ -9,3 +9,14 @@ resource "aws_lambda_function" "lambda" {
   handler      = var.handler
   runtime      = "python3.13"
 }
+
+resource "aws_lambda_permission" "apigw_lambda" {
+  provider = aws.main
+
+  function_name = aws_lambda_function.lambda.function_name 
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = var.source_api_permission
+}

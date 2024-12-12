@@ -22,6 +22,8 @@ data "aws_iam_policy_document" "assume_role" {
 data "aws_iam_policy_document" "custom" {
   provider = aws.main
 
+  count = length(var.lambda_policies) > 0 ? 1 : 0
+
   dynamic "statement" {
     for_each = var.lambda_policies
     content {
@@ -44,13 +46,17 @@ resource "aws_iam_role" "rol" {
 resource "aws_iam_policy" "custom_policy" {
   provider = aws.main
 
+  count = length(var.lambda_policies) > 0 ? 1 : 0
+
   name = local.policy_name
-  policy = data.aws_iam_policy_document.custom.json
+  policy = data.aws_iam_policy_document.custom[0].json
 }
 
 resource "aws_iam_role_policy_attachment" "attachment" {
   provider = aws.main
 
+  count = length(var.lambda_policies) > 0 ? 1 : 0
+
   role = aws_iam_role.rol.name
-  policy_arn = aws_iam_policy.custom_policy.arn
+  policy_arn = aws_iam_policy.custom_policy[0].arn
 }
