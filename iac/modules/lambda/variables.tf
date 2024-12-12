@@ -21,9 +21,9 @@ variable "lambda_policies" {
   type = list(
     object(
       {
-        sid = optional(string)
-        actions = list(string)
-        effect = string
+        sid       = optional(string)
+        actions   = list(string)
+        effect    = string
         resources = list(string)
       }
     )
@@ -33,6 +33,6 @@ variable "lambda_policies" {
 
 variable "source_api_permission" {
   description = "Dirreccion del path de la api que va a invocar a la lambda"
-  type = string
-  nullable = false
+  type        = string
+  nullable    = false
 }

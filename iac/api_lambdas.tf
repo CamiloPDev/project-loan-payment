@@ -60,9 +60,9 @@ module "lambdas" {
 
   for_each = local.lambdas
 
-  lambda_name           = replace(each.key, "_", "-")
-  env                   = var.env
-  handler               = "index.handler"
+  lambda_name = replace(each.key, "_", "-")
+  env         = var.env
+  handler     = "index.handler"
   # lambda_policies       = each.value.lambda_policies
   source_api_permission = each.value.source_api_permission
 }

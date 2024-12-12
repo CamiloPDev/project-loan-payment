@@ -19,9 +19,9 @@ resource "aws_api_gateway_resource" "root" {
 resource "aws_api_gateway_stage" "name" {
   provider = aws.main
 
-  stage_name = var.env
+  stage_name    = var.env
   deployment_id = aws_api_gateway_deployment.deploy.id
-  rest_api_id = aws_api_gateway_rest_api.api.id
+  rest_api_id   = aws_api_gateway_rest_api.api.id
 }
 
 # ---------- Client ---------- #
@@ -107,7 +107,7 @@ module "api_configuration" {
   }
   source = "./modules/api_methods_integration"
 
-  api_id = aws_api_gateway_rest_api.api.id
+  api_id            = aws_api_gateway_rest_api.api.id
   api_configuration = local.api_configuration
 }
 
@@ -125,5 +125,5 @@ resource "aws_api_gateway_deployment" "deploy" {
     ))
   }
 
-  depends_on = [ module.api_configuration ]
+  depends_on = [module.api_configuration]
 }

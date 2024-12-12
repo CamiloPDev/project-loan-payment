@@ -27,9 +27,9 @@ data "aws_iam_policy_document" "custom" {
   dynamic "statement" {
     for_each = var.lambda_policies
     content {
-      sid = statement.value.sid
-      actions = statement.value.actions
-      effect = statement.value.effect
+      sid       = statement.value.sid
+      actions   = statement.value.actions
+      effect    = statement.value.effect
       resources = statement.value.resources
     }
   }
@@ -48,7 +48,7 @@ resource "aws_iam_policy" "custom_policy" {
 
   count = length(var.lambda_policies) > 0 ? 1 : 0
 
-  name = local.policy_name
+  name   = local.policy_name
   policy = data.aws_iam_policy_document.custom[0].json
 }
 
@@ -57,6 +57,6 @@ resource "aws_iam_role_policy_attachment" "attachment" {
 
   count = length(var.lambda_policies) > 0 ? 1 : 0
 
-  role = aws_iam_role.rol.name
+  role       = aws_iam_role.rol.name
   policy_arn = aws_iam_policy.custom_policy[0].arn
 }

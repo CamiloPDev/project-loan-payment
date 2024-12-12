@@ -14,17 +14,17 @@ resource "aws_api_gateway_integration" "integration" {
 
   for_each = var.api_configuration
 
-  rest_api_id = var.api_id
-  type        = "AWS_PROXY"
-  http_method = aws_api_gateway_method.methods[each.key].http_method
+  rest_api_id             = var.api_id
+  type                    = "AWS_PROXY"
+  http_method             = aws_api_gateway_method.methods[each.key].http_method
   integration_http_method = "POST"
-  resource_id = each.value.resource_id
-  uri         = each.value.lambda_invoke_arn
+  resource_id             = each.value.resource_id
+  uri                     = each.value.lambda_invoke_arn
 }
 
 resource "aws_api_gateway_deployment" "deploy" {
-  provider = aws.main 
-  
+  provider = aws.main
+
   rest_api_id = var.api_id
 
   triggers = {

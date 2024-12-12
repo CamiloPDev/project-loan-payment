@@ -13,7 +13,7 @@ resource "aws_lambda_function" "lambda" {
 resource "aws_lambda_permission" "apigw_lambda" {
   provider = aws.main
 
-  function_name = aws_lambda_function.lambda.function_name 
+  function_name = aws_lambda_function.lambda.function_name
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
