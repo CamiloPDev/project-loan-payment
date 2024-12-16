@@ -36,3 +36,9 @@ variable "source_api_permission" {
   type        = string
   nullable    = false
 }
+
+variable "environment" {
+  description = "enviroment de la funcion lambda"
+  type = map(string)
+  default = {}
+}

@@ -8,6 +8,13 @@ resource "aws_lambda_function" "lambda" {
   filename     = "${path.module}/lambda.zip"
   handler      = var.handler
   runtime      = "python3.13"
+  
+  dynamic "environment" {
+    for_each = length(var.environment) > 0 ? [true] : []
+    content {
+      variables = var.environment
+    }
+  }
 }
 
 resource "aws_lambda_permission" "apigw_lambda" {

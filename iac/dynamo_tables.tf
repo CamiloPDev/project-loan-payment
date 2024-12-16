@@ -1,29 +1,29 @@
 locals {
   tables = {
     payment = {
-      hash_key = "testkey"
+      hash_key = "paymentId"
       attributes = [
         {
-          name = "testkey"
-          type = "S"
+          name = "paymentId"
+          type = "N"
         }
       ]
     }
     loan = {
-      hash_key = "testkey"
+      hash_key = "loanId"
       attributes = [
         {
-          name = "testkey"
-          type = "S"
+          name = "loanId"
+          type = "N"
         }
       ]
     }
     client = {
-      hash_key = "testkey"
+      hash_key = "clientId"
       attributes = [
         {
-          name = "testkey"
-          type = "S"
+          name = "clientId"
+          type = "N"
         }
       ]
     }

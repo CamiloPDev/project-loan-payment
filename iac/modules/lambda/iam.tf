@@ -60,3 +60,10 @@ resource "aws_iam_role_policy_attachment" "attachment" {
   role       = aws_iam_role.rol.name
   policy_arn = aws_iam_policy.custom_policy[0].arn
 }
+
+resource "aws_iam_role_policy_attachment" "attachment_basic_policy" {
+  provider = aws.main
+
+  role       = aws_iam_role.rol.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}

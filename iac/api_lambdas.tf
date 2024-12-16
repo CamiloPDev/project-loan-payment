@@ -8,7 +8,8 @@ locals {
         "dynamodb:GetItem",
         "dynamodb:Query",
         "dynamodb:Scan",
-        "dynamodb:DescribeTable"
+        "dynamodb:DescribeTable",
+        "dynamodb:PutItem"
       ]
       resources = [
         module.tables["payment"].table_arn,
@@ -24,6 +25,9 @@ locals {
     }
     post_client = {
       source_api_permission = "${local.base_source_api}/${local.api_configuration["post_client"].http_method}${aws_api_gateway_resource.client.path}"
+      enviroment = {
+        TABLE_CLIENT = module.tables["client"].table_name
+      }
     }
     get_client_id = {
       source_api_permission = "${local.base_source_api}/${local.api_configuration["get_client_id"].http_method}${aws_api_gateway_resource.client_id.path}"
@@ -82,4 +86,5 @@ module "lambdas" {
   handler               = "index.handler"
   lambda_policies       = local.lambda_transversal_policies
   source_api_permission = each.value.source_api_permission
+  environment = try(each.value.enviroment, {})
 }
