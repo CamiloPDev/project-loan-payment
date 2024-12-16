@@ -43,6 +43,9 @@ locals {
     }
     post_payment = {
       source_api_permission = "${local.base_source_api}/${local.api_configuration["post_payment"].http_method}${aws_api_gateway_resource.payment.path}"
+      enviroment = {
+        TABLE_PAYMENT = module.tables["payment"].table_name
+      }
     }
     get_payment_id = {
       source_api_permission = "${local.base_source_api}/${local.api_configuration["get_payment_id"].http_method}${aws_api_gateway_resource.payment_id.path}"
@@ -61,6 +64,9 @@ locals {
     }
     post_loan = {
       source_api_permission = "${local.base_source_api}/${local.api_configuration["post_loan"].http_method}${aws_api_gateway_resource.loan.path}"
+      enviroment = {
+        TABLE_LOAN = module.tables["loan"].table_name
+      }
     }
     get_loan_id = {
       source_api_permission = "${local.base_source_api}/${local.api_configuration["get_loan_id"].http_method}${aws_api_gateway_resource.loan_id.path}"

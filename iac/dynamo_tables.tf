@@ -5,7 +5,7 @@ locals {
       attributes = [
         {
           name = "paymentId"
-          type = "N"
+          type = "S"
         }
       ]
     }
@@ -14,7 +14,7 @@ locals {
       attributes = [
         {
           name = "loanId"
-          type = "N"
+          type = "S"
         }
       ]
     }

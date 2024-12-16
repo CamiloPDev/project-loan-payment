@@ -11,7 +11,7 @@ def handler(event, context):
     try:
         body = json.loads(event['body'])
         
-        required_fields = ['name', 'phoneNumber']
+        required_fields = ['clientId', 'name', 'phoneNumber']
         for field in required_fields:
             if field not in body:
                 return {
