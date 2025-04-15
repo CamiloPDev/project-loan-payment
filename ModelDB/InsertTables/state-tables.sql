@@ -1,14 +1,14 @@
-INSERT INTO "EstadoPrestamo" ("estado", "descripcion") VALUES
-('Pendiente', 'El préstamo ha sido solicitado pero no aprobado.'),
-('Activo', 'El préstamo ha sido desembolsado y está en curso.'),
-('Finalizado', 'El préstamo ha sido pagado completamente.'),
-('Moroso', 'El préstamo tiene pagos vencidos.'),
-('Cancelado', 'El préstamo fue cancelado antes de activarse.');
+INSERT INTO "LoanStatus" ("status", "description") VALUES
+('Pending', 'The loan has been requested but not approved.'),
+('Active', 'The loan has been disbursed and is currently in progress.'),
+('Completed', 'The loan has been fully repaid.'),
+('Delinquent', 'The loan has overdue payments.'),
+('Cancelled', 'The loan was cancelled before activation.');
 
-INSERT INTO "EstadoPrestatario" ("estado", "descripcion") VALUES
-('Activo', 'El prestatario está habilitado para solicitar préstamos.'),
-('Inactivo', 'El prestatario no puede realizar operaciones por el momento.'),
-('Moroso', 'El prestatario tiene deudas vencidas.'),
-('Vetado', 'El prestatario ha sido vetado por mal historial de pagos.');
+INSERT INTO "BorrowerStatus" ("status", "description") VALUES
+('Active', 'The borrower is eligible to apply for loans.'),
+('Inactive', 'The borrower cannot perform operations at the moment.'),
+('Delinquent', 'The borrower has overdue debts.'),
+('Banned', 'The borrower has been banned due to poor payment history.');
 
 COMMIT;
