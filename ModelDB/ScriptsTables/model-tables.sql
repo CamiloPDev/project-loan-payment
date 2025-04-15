@@ -14,7 +14,7 @@ CREATE TABLE "Prestatario" (
     "id" INT PRIMARY KEY,
     "nombres" VARCHAR NOT NULL,
     "apellidos" VARCHAR NOT NULL,
-    "telefono" INT,
+    "telefono" VARCHAR,
     "fechaRegistro" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "idEstadoPrestatario" INT REFERENCES "EstadoPrestatario"("id")
 );
