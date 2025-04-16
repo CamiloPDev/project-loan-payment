@@ -27,5 +27,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  frontend:
+    build: ./frontend
+    container_name: prestamos-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    # command: npm run dev
+
 volumes:
   postgres_data:
