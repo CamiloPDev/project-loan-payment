@@ -10,7 +10,7 @@ services:
       DB_HOST: db
       DB_USER: postgres
       DB_PASSWORD: postgres
-      DB_NAME: prestamos
+      DB_NAME: loan
     depends_on:
       - db
 
@@ -23,7 +23,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: prestamos
+      POSTGRES_DB: loan
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

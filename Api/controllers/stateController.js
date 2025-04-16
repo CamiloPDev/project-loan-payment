@@ -1,11 +1,11 @@
 const pool = require('../models/db');
 
-exports.getEstadoPrestatario = async (req, res) => {
-  const result = await pool.query('SELECT * FROM "EstadoPrestatario"');
+exports.getBorrowerStatus = async (req, res) => {
+  const result = await pool.query('SELECT * FROM "BorrowerStatus"');
   res.json(result.rows);
 };
 
-exports.getEstadoPrestamo = async (req, res) => {
-  const result = await pool.query('SELECT * FROM "EstadoPrestamo"');
+exports.getLoanStatus = async (req, res) => {
+  const result = await pool.query('SELECT * FROM "LoanStatus"');
   res.json(result.rows);
 };

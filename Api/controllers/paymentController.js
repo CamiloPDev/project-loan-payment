@@ -1,16 +1,16 @@
 const pool = require('../models/db');
 
-exports.getPagos = async (req, res) => {
-  const result = await pool.query('SELECT * FROM "Pagos"');
+exports.getPayments = async (req, res) => {
+  const result = await pool.query('SELECT * FROM "Payments"');
   res.json(result.rows);
 };
 
-exports.createPago = async (req, res) => {
-  const { idPrestamo, pagoAbono, pagoInteres, fecha } = req.body;
+exports.createPayment = async (req, res) => {
+  const { loanId, principalPayment, interestPayment, date } = req.body;
   const result = await pool.query(
-    `INSERT INTO "Pagos" (id, pagoAbono, pagoInteres, fecha)
+    `INSERT INTO "Payments" (id, principalPayment, interestPayment, date)
      VALUES ($1, $2, $3, $4) RETURNING *`,
-    [idPrestamo, pagoAbono, pagoInteres, fecha]
+    [loanId, principalPayment, interestPayment, date]
   );
   res.status(201).json(result.rows[0]);
 };

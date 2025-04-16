@@ -1,40 +1,40 @@
-CREATE TABLE "EstadoPrestatario" (
+CREATE TABLE "BorrowerStatus" (
     "id" SERIAL PRIMARY KEY,
-    "estado" VARCHAR NOT NULL,
-    "descripcion" VARCHAR
+    "status" VARCHAR NOT NULL,
+    "description" VARCHAR
 );
 
-CREATE TABLE "EstadoPrestamo" (
+CREATE TABLE "LoanStatus" (
     "id" SERIAL PRIMARY KEY,
-    "estado" VARCHAR NOT NULL,
-    "descripcion" VARCHAR
+    "status" VARCHAR NOT NULL,
+    "description" VARCHAR
 );
 
-CREATE TABLE "Prestatario" (
+CREATE TABLE "Borrower" (
     "id" INT PRIMARY KEY,
-    "nombres" VARCHAR NOT NULL,
-    "apellidos" VARCHAR NOT NULL,
-    "telefono" VARCHAR,
-    "fechaRegistro" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "idEstadoPrestatario" INT REFERENCES "EstadoPrestatario"("id")
+    "firstName" VARCHAR NOT NULL,
+    "lastName" VARCHAR NOT NULL,
+    "phone" VARCHAR,
+    "registrationDate" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "borrowerStatusId" INT REFERENCES "BorrowerStatus"("id")
 );
 
-CREATE TABLE "Prestamos" (
+CREATE TABLE "Loans" (
     "id" SERIAL PRIMARY KEY,
-    "idPrestatario" INT REFERENCES "Prestatario"("id"),
-    "montoPrestamo" INT NOT NULL,
-    "tasaInteres" DECIMAL(5, 2) NOT NULL,
-    "fecha" TIME NOT NULL,
-    "fechaPlazoFinal" TIME NOT NULL,
-    "idEstadoPrestamo" INT REFERENCES "EstadoPrestamo"("id")
+    "borrowerId" INT REFERENCES "Borrower"("id"),
+    "loanAmount" INT NOT NULL,
+    "interestRate" DECIMAL(5, 2) NOT NULL,
+    "date" TIME NOT NULL,
+    "dueDate" TIME NOT NULL,
+    "loanStatusId" INT REFERENCES "LoanStatus"("id")
 );
 
-CREATE TABLE "Pagos" (
+CREATE TABLE "Payments" (
     "id" SERIAL PRIMARY KEY,
-    "idPrestamo" INT REFERENCES "Prestamos"("id"),
-    "pagoAbono" DECIMAL(10, 2) NOT NULL,
-    "pagoInteres" DECIMAL(10, 2) NOT NULL,
-    "fecha" TIME NOT NULL
+    "loanId" INT REFERENCES "Loans"("id"),
+    "principalPayment" DECIMAL(10, 2) NOT NULL,
+    "interestPayment" DECIMAL(10, 2) NOT NULL,
+    "date" TIME NOT NULL
 );
 
 COMMIT;

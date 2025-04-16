@@ -1,16 +1,16 @@
 const pool = require('../models/db');
 
-exports.getPrestatarios = async (req, res) => {
-    const result = await pool.query('SELECT * FROM "Prestatario"');
+exports.getBorrowers = async (req, res) => {
+    const result = await pool.query('SELECT * FROM "Borrower"');
     res.json(result.rows);
-  };
-  
-  exports.createPrestatario = async (req, res) => {
-    const { id, nombres, apellidos, telefono, idEstadoPrestatario } = req.body;
+};
+
+exports.createBorrower = async (req, res) => {
+    const { id, firstName, lastName, phone, borrowerStatusId } = req.body;
     const result = await pool.query(
-      `INSERT INTO "Prestatario" (id, nombres, apellidos, telefono, idEstadoPrestatario)
+      `INSERT INTO "Borrower" (id, firstName, lastName, phone, borrowerStatusId)
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [id, nombres, apellidos, telefono, idEstadoPrestatario]
+      [id, firstName, lastName, phone, borrowerStatusId]
     );
     res.status(201).json(result.rows[0]);
-  };
+};
