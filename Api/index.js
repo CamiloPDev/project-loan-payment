@@ -6,17 +6,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const prestatarioRouter = require("./routes/borrowerRoute");
-const prestamosRouter = require("./routes/loanRoute");
-const pagosRouter = require("./routes/paymentRoute");
-const estadoRouter = require("./routes/stateRoute");
+const borrowerRouter = require("./routes/borrowerRoute");
+const loanRouter = require("./routes/loanRoute");
+const paymentRouter = require("./routes/paymentRoute");
+const statusRouter = require("./routes/stateRoute");
 
-app.use("/api/prestatarios", prestatarioRouter);
-app.use("/api/prestamos", prestamosRouter);
-app.use("/api/pagos", pagosRouter);
-app.use("/api/estado", estadoRouter);
+app.use("/api/borrowers", borrowerRouter);
+app.use("/api/loans", loanRouter);
+app.use("/api/payments", paymentRouter);
+app.use("/api/status", statusRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`API escuchando en http://localhost:${PORT}`);
+  console.log(`API listening at http://localhost:${PORT}`);
 });
