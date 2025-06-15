@@ -27,5 +27,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  frontend:
+    build: ./Frontend
+    container_name: prestamos-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USERPOLLING=true
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:
