@@ -1,0 +1,10 @@
+.cuts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cut-link {
+    text-decoration: none;
+}
