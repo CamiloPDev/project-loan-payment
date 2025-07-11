@@ -8,7 +8,7 @@ exports.getPayments = async (req, res) => {
 exports.createPayment = async (req, res) => {
   const { loanId, principalPayment, interestPayment, date } = req.body;
   const result = await pool.query(
-    `INSERT INTO "Payments" (id, principalPayment, interestPayment, date)
+    `INSERT INTO "Payments" ("loanId", "principalPayment", "interestPayment", "date")
      VALUES ($1, $2, $3, $4) RETURNING *`,
     [loanId, principalPayment, interestPayment, date]
   );

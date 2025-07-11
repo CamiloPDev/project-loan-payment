@@ -8,7 +8,7 @@ exports.getBorrowers = async (req, res) => {
 exports.createBorrower = async (req, res) => {
     const { id, firstName, lastName, phone, borrowerStatusId } = req.body;
     const result = await pool.query(
-      `INSERT INTO "Borrower" (id, firstName, lastName, phone, borrowerStatusId)
+      `INSERT INTO "Borrower" ("id", "firstName", "lastName", "phone", "borrowerStatusId")
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
       [id, firstName, lastName, phone, borrowerStatusId]
     );
