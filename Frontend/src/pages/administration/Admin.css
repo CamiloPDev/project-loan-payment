@@ -1,10 +1,7 @@
-.cuts {
+.container-admin {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.cut-link {
-    text-decoration: none;
+    gap: 20px;
+    /* Espacio entre columnas, opcional */
+    align-items: flex-start;
+    /* Para alinear desde la parte superior */
 }
