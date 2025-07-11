@@ -4,5 +4,7 @@ const controller = require("../controllers/borrowerController");
 
 router.get("/", controller.getBorrowers);
 router.post("/", controller.createBorrower);
+router.put('/:id', controller.updateBorrower);
+router.delete('/:id', controller.deleteBorrower);
 
 module.exports = router;
