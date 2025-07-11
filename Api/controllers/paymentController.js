@@ -5,6 +5,27 @@ exports.getPayments = async (req, res) => {
   res.json(result.rows);
 };
 
+exports.getPaymentById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      'SELECT * FROM "Payments" WHERE "id" = $1',
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Payment not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching Payment by ID:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 exports.createPayment = async (req, res) => {
   const { loanId, principalPayment, interestPayment, date } = req.body;
   const result = await pool.query(
