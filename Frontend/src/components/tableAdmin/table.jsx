@@ -11,7 +11,7 @@ export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
                             {columns.map((col, idx) => (
                                 <th key={idx}>{col.header}</th>
                             ))}
-                            {(onEdit || onDelete) && <th>Acciones</th>}
+                            {(onEdit || onDelete) && <th>Actions</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -24,10 +24,10 @@ export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
                                     {(onEdit || onDelete) && (
                                         <td>
                                             {onEdit && (
-                                                <button onClick={() => onEdit(row)}>Editar</button>
+                                                <button className='text-[#58a6ff]' onClick={() => onEdit(row)}>Edit</button>
                                             )}
                                             {onDelete && (
-                                                <button onClick={() => onDelete(row.id)}>Eliminar</button>
+                                                <button className='text-[#f85149]' onClick={() => onDelete(row.id)}>Delete</button>
                                             )}
                                         </td>
                                     )}

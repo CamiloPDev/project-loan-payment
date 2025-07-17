@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-* {
+body {
   padding: 0;
   margin: 0;
+  font-family: "Delius";
+  color: #c9d1d9;
+  background-color: #0d1117;
 }

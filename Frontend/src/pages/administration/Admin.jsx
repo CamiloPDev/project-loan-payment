@@ -2,6 +2,7 @@ import './Admin.css'
 import { Link } from "react-router-dom";
 import { useFetchApiLoan } from '../../hooks/useFetchApiLoan';
 import TableAdmin from '../../components/tableAdmin/table';
+import Nav from '../../components/nav/nav';
 
 export default function AdminPage() {
     const { data: dataBorrower } = useFetchApiLoan('api/borrowers');
@@ -12,7 +13,7 @@ export default function AdminPage() {
 
     return (
         <>
-            <h1>Home Prestamos</h1>
+            <Nav />
             <Link to='../'>
                 <h2>Volver al inicio</h2>
             </Link>
@@ -66,9 +67,9 @@ export default function AdminPage() {
                         data={dataBorrower}
                         columns={[
                             { header: 'ID', accessor: 'id' },
-                            { header: 'Nombre', accessor: 'firstName' },
-                            { header: 'Apellido', accessor: 'lastName' },
-                            { header: 'Teléfono', accessor: 'phone' },
+                            { header: 'Name', accessor: 'firstName' },
+                            { header: 'Last Name', accessor: 'lastName' },
+                            { header: 'Phone', accessor: 'phone' },
                             { header: 'Status ID', accessor: 'borrowerStatusId' },
                         ]}
                         onEdit={(row) => {
@@ -86,7 +87,7 @@ export default function AdminPage() {
                         columns={[
                             { header: 'ID', accessor: 'id' },
                             { header: 'Status', accessor: 'status' },
-                            { header: 'Descripción', accessor: 'description' },
+                            { header: 'Description', accessor: 'description' },
                         ]}
                         onEdit={(row) => {
                             console.log("Editar:", row);
@@ -103,7 +104,7 @@ export default function AdminPage() {
                         columns={[
                             { header: 'ID', accessor: 'id' },
                             { header: 'Status', accessor: 'status' },
-                            { header: 'Descripción', accessor: 'description' },
+                            { header: 'Description', accessor: 'description' },
                         ]}
                         onEdit={(row) => {
                             console.log("Editar:", row);
