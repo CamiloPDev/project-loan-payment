@@ -1,5 +1,4 @@
 import './Admin.css'
-import { Link } from "react-router-dom";
 import { useFetchApiLoan } from '../../hooks/useFetchApiLoan';
 import TableAdmin from '../../components/tableAdmin/table';
 import Nav from '../../components/nav/nav';
@@ -14,9 +13,6 @@ export default function AdminPage() {
     return (
         <>
             <Nav />
-            <Link to='../'>
-                <h2>Volver al inicio</h2>
-            </Link>
 
             <div className='flex gap-4 items-start'>
                 <div>
