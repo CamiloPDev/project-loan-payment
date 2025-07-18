@@ -58,12 +58,12 @@ export default function AdminPage() {
                         data={dataLoan}
                         columns={[
                             { header: 'id', accessor: 'id' },
-                            { header: 'borrowerId', accessor: 'borrowerId' },
-                            { header: 'loanAmount', accessor: 'loanAmount' },
-                            { header: 'interestRate', accessor: 'interestRate' },
+                            { header: 'borrower Id', accessor: 'borrowerId' },
+                            { header: 'loan Amount', accessor: 'loanAmount' },
+                            { header: 'interest Rate', accessor: 'interestRate' },
                             { header: 'date', accessor: 'date' },
                             { header: 'dueDate', accessor: 'dueDate' },
-                            { header: 'loanStatusId', accessor: 'loanStatusId' },
+                            { header: 'loan Status Id', accessor: 'loanStatusId' },
                         ]}
                         onCreate={handleCreate}
                         onEdit={handleEdit}
@@ -74,9 +74,9 @@ export default function AdminPage() {
                         data={dataPayment}
                         columns={[
                             { header: 'id', accessor: 'id' },
-                            { header: 'loanId', accessor: 'loanId' },
-                            { header: 'principalPayment', accessor: 'principalPayment' },
-                            { header: 'interestPayment', accessor: 'interestPayment' },
+                            { header: 'loan Id', accessor: 'loanId' },
+                            { header: 'principal Payment', accessor: 'principalPayment' },
+                            { header: 'interest Payment', accessor: 'interestPayment' },
                             { header: 'date', accessor: 'date' },
                         ]}
                         onCreate={handleCreate}
