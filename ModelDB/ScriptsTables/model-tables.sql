@@ -11,7 +11,7 @@ CREATE TABLE "LoanStatus" (
 );
 
 CREATE TABLE "Borrower" (
-    "id" INT PRIMARY KEY,
+    "id" SERIAL PRIMARY KEY,
     "firstName" VARCHAR NOT NULL,
     "lastName" VARCHAR NOT NULL,
     "phone" VARCHAR,
@@ -24,8 +24,8 @@ CREATE TABLE "Loans" (
     "borrowerId" INT REFERENCES "Borrower"("id"),
     "loanAmount" INT NOT NULL,
     "interestRate" DECIMAL(5, 2) NOT NULL,
-    "date" TIME NOT NULL,
-    "dueDate" TIME NOT NULL,
+    "date" DATE DEFAULT CURRENT_DATE,
+    "dueDate" DATE NOT NULL,
     "loanStatusId" INT REFERENCES "LoanStatus"("id")
 );
 
@@ -34,7 +34,7 @@ CREATE TABLE "Payments" (
     "loanId" INT REFERENCES "Loans"("id"),
     "principalPayment" DECIMAL(10, 2) NOT NULL,
     "interestPayment" DECIMAL(10, 2) NOT NULL,
-    "date" TIME NOT NULL
+    "date" DATE DEFAULT CURRENT_DATE
 );
 
 COMMIT;
