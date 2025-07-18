@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
+export default function TableAdmin({ title, data, columns, onCreate, onEdit, onDelete }) {
     return (
         <div className="bg-[#0d1117] text-white p-6 overflow-auto">
             <h1 className="text-2xl font-semibold text-[#c9d1d9] mb-4 border-b border-[#30363d] pb-2">{title}</h1>
@@ -29,7 +29,7 @@ export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
                                         <td className="px-4 py-2 border-b border-[#30363d] space-x-2">
                                             {onEdit && (
                                                 <button
-                                                    className="text-[#58a6ff] hover:underline"
+                                                    className="bg-[#1f6feb] hover:bg-[#1158c7] font-medium py-1 px-2 rounded-md transition-colors duration-200 cursor-pointer"
                                                     onClick={() => onEdit(row)}
                                                 >
                                                     Edit
@@ -37,7 +37,7 @@ export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
                                             )}
                                             {onDelete && (
                                                 <button
-                                                    className="text-[#f85149] hover:underline"
+                                                    className="bg-[#cf222e] hover:bg-[#a40e26] font-medium py-1 px-2 rounded-md transition-colors duration-200 cursor-pointer"
                                                     onClick={() => onDelete(row.id)}
                                                 >
                                                     Delete
@@ -60,6 +60,14 @@ export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
                     </tbody>
                 </table>
             </div>
+            <div className="mt-4">
+                <button
+                    className="bg-[#2ea043] hover:bg-[#238636] font-medium py-2 px-4 rounded-md transition-colors duration-200 cursor-pointer"
+                    onClick={() => onCreate()}
+                >
+                    Crear
+                </button>
+            </div>
         </div>
     );
 }
@@ -73,6 +81,7 @@ TableAdmin.propTypes = {
             accessor: PropTypes.string.isRequired
         })
     ).isRequired,
+    onCreate: PropTypes.func,
     onEdit: PropTypes.func,
     onDelete: PropTypes.func
 };
