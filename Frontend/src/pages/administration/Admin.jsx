@@ -22,13 +22,16 @@ export default function AdminPage() {
     const [openCreate, setOpenCreate] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
 
-    const handleEdit = (row) => {
+    const [editEndpoint, setEditEndpoint] = useState(null);
+
+    const handleEdit = (row, endpoint) => {
         setEditData(row);
+        setEditEndpoint(endpoint);
         setOpenEdit(true);
     };
 
-    const handleDelete = (id) => {
-        setDeleteId(id);
+    const handleDelete = (id, endpoint) => {
+        setDeleteId({ id, endpoint });
         setOpenDelete(true);
     };
 
@@ -37,15 +40,35 @@ export default function AdminPage() {
         setOpenCreate(true);
     };
 
-    const handleSaveEdit = (newData) => {
-        console.log("Guardar cambios:", newData);
-        // aquí llamas al backend (PUT)
+    const handleSaveEdit = async (newData) => {
+        try {
+            const response = await fetch(`http://localhost:5000/api/${editEndpoint}/${newData.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newData),
+            });
+
+            if (!response.ok) throw new Error('Error al actualizar');
+            console.log("Actualización exitosa");
+            setOpenEdit(false);
+        } catch (error) {
+            console.error("Error al guardar los cambios:", error);
+        }
     };
 
-    const handleConfirmDelete = () => {
-        console.log("Eliminar ID:", deleteId);
-        setOpenDelete(false);
-        // aquí llamas al backend (DELETE)
+    const handleConfirmDelete = async () => {
+        try {
+            const { id, endpoint } = deleteId;
+            const response = await fetch(`http://localhost:5000/api/${endpoint}/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) throw new Error('Error al eliminar');
+            console.log("Eliminado con éxito");
+            setOpenDelete(false);
+        } catch (error) {
+            console.error("Error al eliminar:", error);
+        }
     };
 
     return (
@@ -66,8 +89,8 @@ export default function AdminPage() {
                             { header: 'loan Status Id', accessor: 'loanStatusId' },
                         ]}
                         onCreate={handleCreate}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        onEdit={(row) => handleEdit(row, 'loans')}
+                        onDelete={(id) => handleDelete(id, 'loans')}
                     />
                     <TableAdmin
                         title="Payments"
@@ -80,8 +103,8 @@ export default function AdminPage() {
                             { header: 'date', accessor: 'date' },
                         ]}
                         onCreate={handleCreate}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        onEdit={(row) => handleEdit(row, 'payments')}
+                        onDelete={(id) => handleDelete(id, 'payments')}
                     />
                 </div>
                 <div>
@@ -96,8 +119,8 @@ export default function AdminPage() {
                             { header: 'Status ID', accessor: 'borrowerStatusId' },
                         ]}
                         onCreate={handleCreate}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        onEdit={(row) => handleEdit(row, 'borrowers')}
+                        onDelete={(id) => handleDelete(id, 'borrowers')}
                     />
                     <TableAdmin
                         title="Status Borrower"
@@ -108,8 +131,8 @@ export default function AdminPage() {
                             { header: 'Description', accessor: 'description' },
                         ]}
                         onCreate={handleCreate}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        onEdit={(row) => handleEdit(row, 'status/borrower')}
+                        onDelete={(id) => handleDelete(id, 'status/borrower')}
                     />
                     <TableAdmin
                         title="Status Loan"
@@ -120,8 +143,8 @@ export default function AdminPage() {
                             { header: 'Description', accessor: 'description' },
                         ]}
                         onCreate={handleCreate}
-                        onEdit={handleEdit}
-                        onDelete={handleDelete}
+                        onEdit={(row) => handleEdit(row, 'status/loan')}
+                        onDelete={(id) => handleDelete(id, 'status/loan')}
                     />
                 </div>
             </div>
