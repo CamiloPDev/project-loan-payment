@@ -1,7 +1,0 @@
-.container-admin {
-    display: flex;
-    gap: 20px;
-    /* Espacio entre columnas, opcional */
-    align-items: flex-start;
-    /* Para alinear desde la parte superior */
-}

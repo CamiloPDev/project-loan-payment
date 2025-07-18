@@ -1,7 +1,7 @@
 import './Admin.css'
-import { Link } from "react-router-dom";
 import { useFetchApiLoan } from '../../hooks/useFetchApiLoan';
 import TableAdmin from '../../components/tableAdmin/table';
+import Nav from '../../components/nav/nav';
 
 export default function AdminPage() {
     const { data: dataBorrower } = useFetchApiLoan('api/borrowers');
@@ -12,15 +12,12 @@ export default function AdminPage() {
 
     return (
         <>
-            <h1>Home Prestamos</h1>
-            <Link to='../'>
-                <h2>Volver al inicio</h2>
-            </Link>
+            <Nav />
 
             <div className='flex gap-4 items-start'>
                 <div>
                     <TableAdmin
-                        title="Get Loan"
+                        title="Loans"
                         data={dataLoan}
                         columns={[
                             { header: 'id', accessor: 'id' },
@@ -41,7 +38,7 @@ export default function AdminPage() {
                         }}
                     />
                     <TableAdmin
-                        title="Get Payment"
+                        title="Payments"
                         data={dataPayment}
                         columns={[
                             { header: 'id', accessor: 'id' },
@@ -62,13 +59,13 @@ export default function AdminPage() {
                 </div>
                 <div>
                     <TableAdmin
-                        title="Get Borrowers"
+                        title="Borrowers"
                         data={dataBorrower}
                         columns={[
                             { header: 'ID', accessor: 'id' },
-                            { header: 'Nombre', accessor: 'firstName' },
-                            { header: 'Apellido', accessor: 'lastName' },
-                            { header: 'Teléfono', accessor: 'phone' },
+                            { header: 'Name', accessor: 'firstName' },
+                            { header: 'Last Name', accessor: 'lastName' },
+                            { header: 'Phone', accessor: 'phone' },
                             { header: 'Status ID', accessor: 'borrowerStatusId' },
                         ]}
                         onEdit={(row) => {
@@ -81,12 +78,12 @@ export default function AdminPage() {
                         }}
                     />
                     <TableAdmin
-                        title="Get Status Borrower"
+                        title="Status Borrower"
                         data={dataStatusBorrower}
                         columns={[
                             { header: 'ID', accessor: 'id' },
                             { header: 'Status', accessor: 'status' },
-                            { header: 'Descripción', accessor: 'description' },
+                            { header: 'Description', accessor: 'description' },
                         ]}
                         onEdit={(row) => {
                             console.log("Editar:", row);
@@ -98,12 +95,12 @@ export default function AdminPage() {
                         }}
                     />
                     <TableAdmin
-                        title="Get Status Loan"
+                        title="Status Loan"
                         data={dataStatusLoan}
                         columns={[
                             { header: 'ID', accessor: 'id' },
                             { header: 'Status', accessor: 'status' },
-                            { header: 'Descripción', accessor: 'description' },
+                            { header: 'Description', accessor: 'description' },
                         ]}
                         onEdit={(row) => {
                             console.log("Editar:", row);
