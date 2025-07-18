@@ -53,7 +53,7 @@ export default function TableAdmin({ title, data, columns, onEdit, onDelete }) {
                                     colSpan={columns.length + (onEdit || onDelete ? 1 : 0)}
                                     className="px-4 py-3 text-center text-[#8b949e]"
                                 >
-                                    Loading...
+                                    No Data
                                 </td>
                             </tr>
                         )}
