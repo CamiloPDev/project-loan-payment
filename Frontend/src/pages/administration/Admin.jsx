@@ -1,6 +1,10 @@
 import './Admin.css'
 import { useFetchApiLoan } from '../../hooks/useFetchApiLoan';
+import { useState } from 'react';
 import TableAdmin from '../../components/tableAdmin/table';
+import EditModal from '../../components/modals/EditModal';
+import CreateModal from '../../components/modals/CreateModal';
+import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import Nav from '../../components/nav/nav';
 
 export default function AdminPage() {
@@ -10,10 +14,43 @@ export default function AdminPage() {
     const { data: dataLoan } = useFetchApiLoan('api/loans');
     const { data: dataPayment } = useFetchApiLoan('api/payments');
 
+    const [editData, setEditData] = useState(null);
+    const [createType, setCreateType] = useState(null);
+    const [deleteId, setDeleteId] = useState(null);
+
+    const [openEdit, setOpenEdit] = useState(false);
+    const [openCreate, setOpenCreate] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
+
+    const handleEdit = (row) => {
+        setEditData(row);
+        setOpenEdit(true);
+    };
+
+    const handleDelete = (id) => {
+        setDeleteId(id);
+        setOpenDelete(true);
+    };
+
+    const handleCreate = (type) => {
+        setCreateType(type);
+        setOpenCreate(true);
+    };
+
+    const handleSaveEdit = (newData) => {
+        console.log("Guardar cambios:", newData);
+        // aquí llamas al backend (PUT)
+    };
+
+    const handleConfirmDelete = () => {
+        console.log("Eliminar ID:", deleteId);
+        setOpenDelete(false);
+        // aquí llamas al backend (DELETE)
+    };
+
     return (
         <>
             <Nav />
-
             <div className='flex gap-4 items-start'>
                 <div>
                     <TableAdmin
@@ -28,14 +65,9 @@ export default function AdminPage() {
                             { header: 'dueDate', accessor: 'dueDate' },
                             { header: 'loanStatusId', accessor: 'loanStatusId' },
                         ]}
-                        onEdit={(row) => {
-                            console.log("Editar:", row);
-                            // Aquí puedes abrir un modal o redirigir a una página de edición
-                        }}
-                        onDelete={(id) => {
-                            console.log("Eliminar ID:", id);
-                            // Aquí puedes hacer un fetch DELETE al backend
-                        }}
+                        onCreate={handleCreate}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
                     />
                     <TableAdmin
                         title="Payments"
@@ -47,14 +79,9 @@ export default function AdminPage() {
                             { header: 'interestPayment', accessor: 'interestPayment' },
                             { header: 'date', accessor: 'date' },
                         ]}
-                        onEdit={(row) => {
-                            console.log("Editar:", row);
-                            // Aquí puedes abrir un modal o redirigir a una página de edición
-                        }}
-                        onDelete={(id) => {
-                            console.log("Eliminar ID:", id);
-                            // Aquí puedes hacer un fetch DELETE al backend
-                        }}
+                        onCreate={handleCreate}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
                     />
                 </div>
                 <div>
@@ -68,14 +95,9 @@ export default function AdminPage() {
                             { header: 'Phone', accessor: 'phone' },
                             { header: 'Status ID', accessor: 'borrowerStatusId' },
                         ]}
-                        onEdit={(row) => {
-                            console.log("Editar:", row);
-                            // Aquí puedes abrir un modal o redirigir a una página de edición
-                        }}
-                        onDelete={(id) => {
-                            console.log("Eliminar ID:", id);
-                            // Aquí puedes hacer un fetch DELETE al backend
-                        }}
+                        onCreate={handleCreate}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
                     />
                     <TableAdmin
                         title="Status Borrower"
@@ -85,14 +107,9 @@ export default function AdminPage() {
                             { header: 'Status', accessor: 'status' },
                             { header: 'Description', accessor: 'description' },
                         ]}
-                        onEdit={(row) => {
-                            console.log("Editar:", row);
-                            // Aquí puedes abrir un modal o redirigir a una página de edición
-                        }}
-                        onDelete={(id) => {
-                            console.log("Eliminar ID:", id);
-                            // Aquí puedes hacer un fetch DELETE al backend
-                        }}
+                        onCreate={handleCreate}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
                     />
                     <TableAdmin
                         title="Status Loan"
@@ -102,17 +119,33 @@ export default function AdminPage() {
                             { header: 'Status', accessor: 'status' },
                             { header: 'Description', accessor: 'description' },
                         ]}
-                        onEdit={(row) => {
-                            console.log("Editar:", row);
-                            // Aquí puedes abrir un modal o redirigir a una página de edición
-                        }}
-                        onDelete={(id) => {
-                            console.log("Eliminar ID:", id);
-                            // Aquí puedes hacer un fetch DELETE al backend
-                        }}
+                        onCreate={handleCreate}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
                     />
                 </div>
             </div>
+            <EditModal
+                isOpen={openEdit}
+                onClose={() => setOpenEdit(false)}
+                data={editData}
+                onSave={handleSaveEdit}
+            />
+            <CreateModal
+                isOpen={openCreate}
+                onClose={() => setOpenCreate(false)}
+                type={createType}
+                onSave={(newData) => {
+                    console.log('Crear nuevo:', newData);
+                    // aquí llamas al backend (POST)
+                }}
+            />
+
+            <ConfirmDeleteModal
+                isOpen={openDelete}
+                onClose={() => setOpenDelete(false)}
+                onConfirm={handleConfirmDelete}
+            />
 
         </>
     )
