@@ -17,7 +17,7 @@ export default function AdminPage() {
             <div className='flex gap-4 items-start'>
                 <div>
                     <TableAdmin
-                        title="Get Loan"
+                        title="Loans"
                         data={dataLoan}
                         columns={[
                             { header: 'id', accessor: 'id' },
@@ -38,7 +38,7 @@ export default function AdminPage() {
                         }}
                     />
                     <TableAdmin
-                        title="Get Payment"
+                        title="Payments"
                         data={dataPayment}
                         columns={[
                             { header: 'id', accessor: 'id' },
@@ -59,7 +59,7 @@ export default function AdminPage() {
                 </div>
                 <div>
                     <TableAdmin
-                        title="Get Borrowers"
+                        title="Borrowers"
                         data={dataBorrower}
                         columns={[
                             { header: 'ID', accessor: 'id' },
@@ -78,7 +78,7 @@ export default function AdminPage() {
                         }}
                     />
                     <TableAdmin
-                        title="Get Status Borrower"
+                        title="Status Borrower"
                         data={dataStatusBorrower}
                         columns={[
                             { header: 'ID', accessor: 'id' },
@@ -95,7 +95,7 @@ export default function AdminPage() {
                         }}
                     />
                     <TableAdmin
-                        title="Get Status Loan"
+                        title="Status Loan"
                         data={dataStatusLoan}
                         columns={[
                             { header: 'ID', accessor: 'id' },
