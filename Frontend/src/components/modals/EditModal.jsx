@@ -20,25 +20,35 @@ export default function EditModal({ isOpen, onClose, data, onSave }) {
 
     return (
         <ModalBase isOpen={isOpen} onClose={onClose}>
-            <h2 className="text-xl font-bold mb-4">Editar elemento</h2>
-            {Object.keys(formData).map(key => (
-                <div key={key} className="mb-3">
-                    <label className="block mb-1 text-sm capitalize">{key}</label>
-                    <input
-                        type="text"
-                        name={key}
-                        value={formData[key] ?? ''}
-                        onChange={handleChange}
-                        className="w-full p-2 text-black rounded"
-                    />
+            <div className="bg-[#0d1117] text-[#c9d1d9] p-6 rounded shadow-lg">
+                <h2 className="text-xl font-semibold mb-4 text-[#58a6ff]">Editar elemento</h2>
+                {Object.keys(formData).map(key => (
+                    <div key={key} className="mb-4">
+                        <label className="block mb-1 text-sm capitalize text-[#8b949e]">{key}</label>
+                        <input
+                            type="text"
+                            name={key}
+                            value={formData[key] ?? ''}
+                            onChange={handleChange}
+                            className="w-full p-2 rounded bg-[#161b22] border border-[#30363d] text-[#c9d1d9] focus:outline-none focus:ring-2 focus:ring-[#58a6ff]"
+                        />
+                    </div>
+                ))}
+                <div className="flex justify-end space-x-2 mt-6">
+                    <button
+                        onClick={onClose}
+                        className="px-4 py-2 rounded bg-[#21262d] text-[#c9d1d9] hover:bg-[#30363d]"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        onClick={handleSubmit}
+                        className="px-4 py-2 rounded bg-[#238636] text-white hover:bg-[#2ea043]"
+                    >
+                        Guardar
+                    </button>
                 </div>
-            ))}
-            <button
-                onClick={handleSubmit}
-                className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 mt-2"
-            >
-                Guardar
-            </button>
+            </div>
         </ModalBase>
     );
 }
