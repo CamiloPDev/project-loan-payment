@@ -29,7 +29,7 @@ export default function TableAdmin({ title, data, columns, onCreate, onEdit, onD
                                         <td className="px-4 py-2 border-b border-[#30363d] space-x-2">
                                             {onEdit && (
                                                 <button
-                                                    className="bg-[#1f6feb] hover:bg-[#1158c7] font-medium py-1 px-2 rounded-md transition-colors duration-200 cursor-pointer"
+                                                    className="bg-[#1f6feb] hover:bg-[#1158c7] font-medium py-1 px-2 rounded-md transition-colors duration-200 cursor-pointer my-0.5"
                                                     onClick={() => onEdit(row)}
                                                 >
                                                     Edit
@@ -37,7 +37,7 @@ export default function TableAdmin({ title, data, columns, onCreate, onEdit, onD
                                             )}
                                             {onDelete && (
                                                 <button
-                                                    className="bg-[#cf222e] hover:bg-[#a40e26] font-medium py-1 px-2 rounded-md transition-colors duration-200 cursor-pointer"
+                                                    className="bg-[#cf222e] hover:bg-[#a40e26] font-medium py-1 px-2 rounded-md transition-colors duration-200 cursor-pointer my-0.5"
                                                     onClick={() => onDelete(row.id)}
                                                 >
                                                     Delete

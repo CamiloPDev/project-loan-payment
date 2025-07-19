@@ -42,8 +42,8 @@ export default function AdminPage() {
     };
 
     const fieldsByType = {
-        loans: ['borrowerId', 'loanAmount', 'interestRate', 'date', 'dueDate', 'loanStatusId'],
-        payments: ['loanId', 'principalPayment', 'interestPayment', 'date'],
+        loans: ['description', 'borrowerId', 'loanAmount', 'interestRate', 'date', 'dueDate', 'loanStatusId'],
+        payments: ['description', 'loanId', 'principalPayment', 'interestPayment', 'date'],
         borrowers: ['firstName', 'lastName', 'phone', 'borrowerStatusId'],
         'status/borrower': ['status', 'description'],
         'status/loan': ['status', 'description'],
@@ -90,6 +90,7 @@ export default function AdminPage() {
                         data={dataLoan}
                         columns={[
                             { header: 'id', accessor: 'id' },
+                            { header: 'description', accessor: 'description' },
                             { header: 'borrower Id', accessor: 'borrowerId' },
                             { header: 'loan Amount', accessor: 'loanAmount' },
                             { header: 'interest Rate', accessor: 'interestRate' },
@@ -106,6 +107,7 @@ export default function AdminPage() {
                         data={dataPayment}
                         columns={[
                             { header: 'id', accessor: 'id' },
+                            { header: 'description', accessor: 'description' },
                             { header: 'loan Id', accessor: 'loanId' },
                             { header: 'principal Payment', accessor: 'principalPayment' },
                             { header: 'interest Payment', accessor: 'interestPayment' },

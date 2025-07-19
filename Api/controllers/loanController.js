@@ -26,31 +26,32 @@ exports.getLoanById = async (req, res) => {
 };
 
 exports.createLoan = async (req, res) => {
-  const { borrowerId, loanAmount, interestRate, dueDate, loanStatusId } = req.body;
+  const { description, borrowerId, loanAmount, interestRate, dueDate, loanStatusId } = req.body;
   const result = await pool.query(
-    `INSERT INTO "Loans" ("borrowerId", "loanAmount", "interestRate", "dueDate", "loanStatusId")
-     VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-    [borrowerId, loanAmount, interestRate, dueDate, loanStatusId]
+    `INSERT INTO "Loans" ("description", "borrowerId", "loanAmount", "interestRate", "dueDate", "loanStatusId")
+     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+    [description, borrowerId, loanAmount, interestRate, dueDate, loanStatusId]
   );
   res.status(201).json(result.rows[0]);
 };
 
 exports.updateLoan = async (req, res) => {
   const { id } = req.params;
-  const { borrowerId, loanAmount, interestRate, date, dueDate, loanStatusId } = req.body;
+  const { description, borrowerId, loanAmount, interestRate, date, dueDate, loanStatusId } = req.body;
 
   try {
     const result = await pool.query(
       `UPDATE "Loans"
-       SET "borrowerId" = $1,
-           "loanAmount" = $2,
-           "interestRate" = $3,
-           "date" = $4,
-           "dueDate" = $5,
-           "loanStatusId" = $6
-       WHERE "id" = $7
+       SET "description" = $1,
+           "borrowerId" = $2,
+           "loanAmount" = $3,
+           "interestRate" = $4,
+           "date" = $5,
+           "dueDate" = $6,
+           "loanStatusId" = $7
+       WHERE "id" = $8
        RETURNING *`,
-      [borrowerId, loanAmount, interestRate, date, dueDate, loanStatusId, id]
+      [description, borrowerId, loanAmount, interestRate, date, dueDate, loanStatusId, id]
     );
 
     if (result.rowCount === 0) {
