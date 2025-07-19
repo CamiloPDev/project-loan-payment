@@ -1,9 +1,19 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ModalBase from './ModalBase';
 
-export default function CreateModal({ isOpen, onClose, type, onSave }) {
+export default function CreateModal({ isOpen, onClose, fields, onSave, title }) {
     const [formData, setFormData] = useState({});
+
+    useEffect(() => {
+        if (isOpen) {
+            const initialData = {};
+            fields.forEach(field => {
+                initialData[field] = '';
+            });
+            setFormData(initialData);
+        }
+    }, [isOpen, fields]);
 
     const handleChange = (e) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -16,9 +26,9 @@ export default function CreateModal({ isOpen, onClose, type, onSave }) {
 
     return (
         <ModalBase isOpen={isOpen} onClose={onClose}>
-            <h2 className="text-xl font-bold mb-4">Crear nuevo {type}</h2>
-            {/* Puedes personalizar estos campos según el tipo */}
-            {['campo1', 'campo2', 'campo3'].map((field) => (
+            <h2 className="text-xl font-bold mb-4">{title}</h2>
+
+            {fields.map((field) => (
                 <div key={field} className="mb-3">
                     <label className="block mb-1 text-sm capitalize">{field}</label>
                     <input
@@ -30,6 +40,7 @@ export default function CreateModal({ isOpen, onClose, type, onSave }) {
                     />
                 </div>
             ))}
+
             <button
                 onClick={handleSubmit}
                 className="bg-green-600 px-4 py-2 rounded hover:bg-green-700 mt-2"
@@ -39,3 +50,11 @@ export default function CreateModal({ isOpen, onClose, type, onSave }) {
         </ModalBase>
     );
 }
+
+CreateModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    fields: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onSave: PropTypes.func.isRequired,
+    title: PropTypes.string,
+};

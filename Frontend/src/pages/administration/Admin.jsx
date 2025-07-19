@@ -36,8 +36,17 @@ export default function AdminPage() {
     };
 
     const handleCreate = (type) => {
+        console.log('Creando tipo:', type);
         setCreateType(type);
         setOpenCreate(true);
+    };
+
+    const fieldsByType = {
+        loans: ['borrowerId', 'loanAmount', 'interestRate', 'date', 'dueDate', 'loanStatusId'],
+        payments: ['loanId', 'principalPayment', 'interestPayment', 'date'],
+        borrowers: ['firstName', 'lastName', 'phone', 'borrowerStatusId'],
+        'status/borrower': ['status', 'description'],
+        'status/loan': ['status', 'description'],
     };
 
     const handleSaveEdit = async (newData) => {
@@ -88,7 +97,7 @@ export default function AdminPage() {
                             { header: 'dueDate', accessor: 'dueDate' },
                             { header: 'loan Status Id', accessor: 'loanStatusId' },
                         ]}
-                        onCreate={handleCreate}
+                        onCreate={() => handleCreate('loans')}
                         onEdit={(row) => handleEdit(row, 'loans')}
                         onDelete={(id) => handleDelete(id, 'loans')}
                     />
@@ -102,7 +111,7 @@ export default function AdminPage() {
                             { header: 'interest Payment', accessor: 'interestPayment' },
                             { header: 'date', accessor: 'date' },
                         ]}
-                        onCreate={handleCreate}
+                        onCreate={() => handleCreate('payments')}
                         onEdit={(row) => handleEdit(row, 'payments')}
                         onDelete={(id) => handleDelete(id, 'payments')}
                     />
@@ -118,7 +127,7 @@ export default function AdminPage() {
                             { header: 'Phone', accessor: 'phone' },
                             { header: 'Status ID', accessor: 'borrowerStatusId' },
                         ]}
-                        onCreate={handleCreate}
+                        onCreate={() => handleCreate('borrowers')}
                         onEdit={(row) => handleEdit(row, 'borrowers')}
                         onDelete={(id) => handleDelete(id, 'borrowers')}
                     />
@@ -130,7 +139,7 @@ export default function AdminPage() {
                             { header: 'Status', accessor: 'status' },
                             { header: 'Description', accessor: 'description' },
                         ]}
-                        onCreate={handleCreate}
+                        onCreate={() => handleCreate('status/borrower')}
                         onEdit={(row) => handleEdit(row, 'status/borrower')}
                         onDelete={(id) => handleDelete(id, 'status/borrower')}
                     />
@@ -142,7 +151,7 @@ export default function AdminPage() {
                             { header: 'Status', accessor: 'status' },
                             { header: 'Description', accessor: 'description' },
                         ]}
-                        onCreate={handleCreate}
+                        onCreate={() => handleCreate('status/loan')}
                         onEdit={(row) => handleEdit(row, 'status/loan')}
                         onDelete={(id) => handleDelete(id, 'status/loan')}
                     />
@@ -157,10 +166,21 @@ export default function AdminPage() {
             <CreateModal
                 isOpen={openCreate}
                 onClose={() => setOpenCreate(false)}
-                type={createType}
-                onSave={(newData) => {
-                    console.log('Crear nuevo:', newData);
-                    // aquí llamas al backend (POST)
+                fields={fieldsByType[createType] || []}
+                title={`Crear nuevo ${createType}`}
+                onSave={async (newData) => {
+                    try {
+                        const response = await fetch(`http://localhost:5000/api/${createType}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(newData),
+                        });
+
+                        if (!response.ok) throw new Error('Error al crear');
+                        console.log("Creación exitosa");
+                    } catch (error) {
+                        console.error("Error al crear:", error);
+                    }
                 }}
             />
 
