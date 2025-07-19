@@ -21,6 +21,7 @@ CREATE TABLE "Borrower" (
 
 CREATE TABLE "Loans" (
     "id" SERIAL PRIMARY KEY,
+    "description" VARCHAR,
     "borrowerId" INT REFERENCES "Borrower"("id"),
     "loanAmount" INT NOT NULL,
     "interestRate" DECIMAL(5, 2) NOT NULL,
