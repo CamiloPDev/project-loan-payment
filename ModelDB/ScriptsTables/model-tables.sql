@@ -32,6 +32,7 @@ CREATE TABLE "Loans" (
 
 CREATE TABLE "Payments" (
     "id" SERIAL PRIMARY KEY,
+    "description" VARCHAR,
     "loanId" INT REFERENCES "Loans"("id"),
     "principalPayment" DECIMAL(10, 2) NOT NULL,
     "interestPayment" DECIMAL(10, 2) NOT NULL,

@@ -27,29 +27,30 @@ exports.getPaymentById = async (req, res) => {
 
 
 exports.createPayment = async (req, res) => {
-  const { loanId, principalPayment, interestPayment } = req.body;
+  const { description, loanId, principalPayment, interestPayment } = req.body;
   const result = await pool.query(
-    `INSERT INTO "Payments" ("loanId", "principalPayment", "interestPayment")
-     VALUES ($1, $2, $3) RETURNING *`,
-    [loanId, principalPayment, interestPayment]
+    `INSERT INTO "Payments" ("description", "loanId", "principalPayment", "interestPayment")
+     VALUES ($1, $2, $3, $4) RETURNING *`,
+    [description, loanId, principalPayment, interestPayment]
   );
   res.status(201).json(result.rows[0]);
 };
 
 exports.updatePayment = async (req, res) => {
   const { id } = req.params;
-  const { loanId, principalPayment, interestPayment, date } = req.body;
+  const { description, loanId, principalPayment, interestPayment, date } = req.body;
 
   try {
     const result = await pool.query(
       `UPDATE "Payments"
-       SET "loanId" = $1,
-           "principalPayment" = $2,
-           "interestPayment" = $3,
-           "date" = $4
-       WHERE "id" = $5
+       SET "description" = $1,
+          "loanId" = $2,
+           "principalPayment" = $3,
+           "interestPayment" = $4,
+           "date" = $5
+       WHERE "id" = $6
        RETURNING *`,
-      [loanId, principalPayment, interestPayment, date, id]
+      [description, loanId, principalPayment, interestPayment, date, id]
     );
 
     if (result.rowCount === 0) {
