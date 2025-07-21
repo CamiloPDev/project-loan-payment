@@ -43,11 +43,15 @@ exports.getActiveLoans = async (req, res) => {
     const result = await pool.query(`
         SELECT 
             b."firstName" || ' ' || b."lastName" AS "fullName",
-            l.*
+            l.*,
+            l."loanAmount" - COALESCE(SUM(p."principalPayment"), 0) AS "pendingAmount"
         FROM "Loans" l
         JOIN "Borrower" b ON l."borrowerId" = b."id"
         JOIN "LoanStatus" s ON l."loanStatusId" = s."id"
-        WHERE s."status" = 'Active';
+        LEFT JOIN "Payments" p ON l."id" = p."loanId"
+        WHERE s."status" = 'Active'
+        GROUP BY l."id", b."firstName", b."lastName"
+        ORDER BY l."id";
     `);
     res.json(result.rows);
 };
@@ -70,12 +74,15 @@ exports.getLoanNearDue = async (req, res) => {
     const result = await pool.query(`
         SELECT 
             b."firstName" || ' ' || b."lastName" AS "fullName",
-            l.*
+            l.*,
+            l."loanAmount" - COALESCE(SUM(p."principalPayment"), 0) AS "pendingAmount"
         FROM "Loans" l
         JOIN "Borrower" b ON l."borrowerId" = b."id"
         JOIN "LoanStatus" s ON l."loanStatusId" = s."id"
+        LEFT JOIN "Payments" p ON p."loanId" = l."id"
         WHERE s."status" = 'Active'
         AND l."dueDate" <= CURRENT_DATE + INTERVAL '1 month'
+        GROUP BY l."id", b."firstName", b."lastName"
         ORDER BY l."dueDate" ASC;
         `);
     res.json(result.rows);
