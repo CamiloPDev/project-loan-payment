@@ -10,11 +10,13 @@ const borrowerRouter = require("./routes/borrowerRoute");
 const loanRouter = require("./routes/loanRoute");
 const paymentRouter = require("./routes/paymentRoute");
 const statusRouter = require("./routes/stateRoute");
+const statsRouter = require("./routes/statsRoute");
 
 app.use("/api/borrowers", borrowerRouter);
 app.use("/api/loans", loanRouter);
 app.use("/api/payments", paymentRouter);
 app.use("/api/status", statusRouter);
+app.use("/api/stats", statsRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
