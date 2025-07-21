@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export default function TableView({ title, data, columns }) {
     return (
         <div className="bg-[#0d1117] text-white p-6 overflow-auto">
-            <h1 className="text-2xl font-semibold text-[#c9d1d9] mb-4 border-b border-[#30363d] pb-2">{title}</h1>
+            <h1 className="text-2xl font-semibold text-[#c9d1d9] mb-4 border-b border-[#238636] pb-2">{title}</h1>
             <div className="w-full rounded-xs overflow-x-auto">
                 <table className="w-full text-sm text-left border border-[#30363d] rounded-md">
                     <thead className="bg-[#161b22] text-[#8b949e] uppercase tracking-wider">
