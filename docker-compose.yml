@@ -4,7 +4,7 @@ services:
   backend:
     build: ./Api
     container_name: prestamos-backend
-    restart: always
+    restart: "no"
     ports:
       - "5000:5000"
     environment:
@@ -18,7 +18,7 @@ services:
   db:
     image: postgres:14
     container_name: prestamos-db
-    restart: always
+    restart: "no"
     ports:
       - "5432:5432"
     environment:
@@ -31,7 +31,7 @@ services:
   frontend:
     build: ./Frontend
     container_name: prestamos-frontend
-    restart: always
+    restart: "no"
     ports:
       - "5173:5173"
     environment:
